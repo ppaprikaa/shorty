@@ -3,7 +3,7 @@ package app
 import (
 	"context"
 
-	"github.com/ppaprikaa/shorty/internal/adapters/handlers/http/mux"
+	"github.com/ppaprikaa/shorty/internal/adapters/routers/chi"
 	"github.com/ppaprikaa/shorty/internal/adapters/servers/http"
 	"github.com/ppaprikaa/shorty/internal/core/ports"
 	"github.com/ppaprikaa/shorty/internal/log"
@@ -14,7 +14,7 @@ import (
 var Module = fx.Module(
 	"app",
 	http.Module,
-	mux.Module,
+	chi.Module,
 	fx.Provide(New),
 	fx.Invoke(func(*app) {}),
 )
