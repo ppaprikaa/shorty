@@ -14,7 +14,6 @@ import (
 
 var Module = fx.Module(
 	"servers.http",
-	fx.Provide(newArgs),
 	fx.Provide(
 		fx.Annotate(
 			New,
@@ -23,34 +22,22 @@ var Module = fx.Module(
 	),
 )
 
-type args struct {
-	cfg     *config.HttpServer
-	handler http.Handler
-}
-
-func newArgs(cfg *config.HttpServer, handler http.Handler) *args {
-	return &args{
-		cfg:     cfg,
-		handler: handler,
-	}
-}
-
 type server struct {
 	*http.Server
 }
 
-func New(args *args) *server {
+func New(cfg *config.HttpServer, handler http.Handler) *server {
 	var (
-		addr = fmt.Sprintf("%s:%d", args.cfg.Host, args.cfg.Port)
+		addr = fmt.Sprintf("%s:%d", cfg.Host, cfg.Port)
 	)
 
 	return &server{
 		Server: &http.Server{
 			Addr:         addr,
-			Handler:      args.handler,
-			ReadTimeout:  args.cfg.ReadTimeout,
-			WriteTimeout: args.cfg.WriteTimeout,
-			IdleTimeout:  args.cfg.IdleTimeout,
+			Handler:      handler,
+			ReadTimeout:  cfg.ReadTimeout,
+			WriteTimeout: cfg.WriteTimeout,
+			IdleTimeout:  cfg.IdleTimeout,
 		},
 	}
 }
