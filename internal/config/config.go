@@ -14,11 +14,15 @@ var Module = fx.Module(
 	fx.Provide(MustInit),
 	fx.Provide(GetENV),
 	fx.Provide(HttpServerFromConfig),
+	fx.Provide(MainStorageFromConfig),
+	fx.Provide(RefreshTokensStorageFromConfig),
 )
 
 type Config struct {
-	Env        env.ENV     `toml:"env" env:"SHORTY_ENV"`
-	HttpServer *HttpServer `toml:"http_server"`
+	Env                  env.ENV               `toml:"env" env:"SHORTY_ENV"`
+	HttpServer           *HttpServer           `toml:"http_server"`
+	MainStorage          *MainStorage          `toml:"main_storage"`
+	RefreshTokensStorage *RefreshTokensStorage `toml:"refresh_tokens_storage"`
 }
 
 func GetENV(cfg *Config) env.ENV { return cfg.Env }

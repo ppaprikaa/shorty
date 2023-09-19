@@ -9,3 +9,11 @@ port = 5555
 read_timeout = "5s"
 write_timeout = "5s"
 idle_timeout = "30s"
+
+[main_storage]
+dsn = "mongodb://localhost:27017"
+
+[refresh_tokens_storage]
+dsn = "localhost:6379"
+password = ""
+db = 0

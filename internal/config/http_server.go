@@ -10,4 +10,6 @@ type HttpServer struct {
 	IdleTimeout  time.Duration `toml:"idle_timeout"`
 }
 
-func HttpServerFromConfig(cfg *Config) *HttpServer { return cfg.HttpServer }
+func HttpServerFromConfig(cfg *Config) *HttpServer {
+	return cfg.HttpServer
+}
