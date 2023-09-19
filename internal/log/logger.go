@@ -58,7 +58,3 @@ func FromContext(ctx context.Context) *slog.Logger {
 
 	return New(env.DEV)
 }
-
-func Context(logger *slog.Logger) context.Context {
-	return WithContext(context.Background(), logger)
-}
