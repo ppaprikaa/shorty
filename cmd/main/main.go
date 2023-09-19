@@ -6,6 +6,7 @@ import (
 	"github.com/ppaprikaa/shorty/internal/db/mongo"
 	"github.com/ppaprikaa/shorty/internal/db/redis"
 	"github.com/ppaprikaa/shorty/internal/log"
+	loggercontext "github.com/ppaprikaa/shorty/internal/log/context"
 	"go.uber.org/fx"
 )
 
@@ -13,9 +14,7 @@ func main() {
 	fx.New(
 		config.Module,
 		log.Module,
-		// Base log context
-		// Couldn't initialize, because it is not obvious that module returns base context
-		fx.Provide(log.Context),
+		loggercontext.Module,
 		mongo.Module,
 		redis.Module,
 		app.Module,
