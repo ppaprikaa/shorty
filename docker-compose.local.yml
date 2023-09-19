@@ -1,0 +1,21 @@
+version: '3.1'
+
+services:
+  main-storage:
+    image: mongo:6.0
+    restart: always
+    ports: 
+      - 27017:27017
+    volumes:
+      - main-storage:/data/db
+  refresh-tokens-storage:
+    image: redis:7.0
+    restart: always
+    ports: 
+      - 6379:6379
+    volumes:
+      - refresh-tokens-storage:/data
+
+volumes:
+  main-storage:
+  refresh-tokens-storage:
