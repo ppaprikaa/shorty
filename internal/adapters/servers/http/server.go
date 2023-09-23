@@ -20,30 +20,43 @@ var Module = fx.Module(
 			fx.As(new(ports.Server)),
 		),
 	),
+	fx.Invoke(func(ports.Server) {}),
 )
 
 type server struct {
 	*http.Server
 }
 
-func New(cfg *config.HttpServer, handler http.Handler) *server {
+func New(ctx context.Context, lc fx.Lifecycle, cfg *config.HttpServer, handler http.Handler) *server {
 	var (
-		addr = fmt.Sprintf("%s:%d", cfg.Host, cfg.Port)
+		addr   = fmt.Sprintf("%s:%d", cfg.Host, cfg.Port)
+		server = &server{
+			Server: &http.Server{
+				Addr:         addr,
+				Handler:      handler,
+				ReadTimeout:  cfg.ReadTimeout,
+				WriteTimeout: cfg.WriteTimeout,
+				IdleTimeout:  cfg.IdleTimeout,
+			},
+		}
 	)
 
-	return &server{
-		Server: &http.Server{
-			Addr:         addr,
-			Handler:      handler,
-			ReadTimeout:  cfg.ReadTimeout,
-			WriteTimeout: cfg.WriteTimeout,
-			IdleTimeout:  cfg.IdleTimeout,
+	lc.Append(fx.Hook{
+		OnStart: func(startCtx context.Context) error {
+			log.FromContext(ctx).Info("HTTP SERVER IS WORKING...")
+			log.FromContext(ctx).Info("HTTP SERVER ADDRESS", slog.String("addr", server.Server.Addr))
+			return server.Run(startCtx)
 		},
-	}
+		OnStop: func(stopCtx context.Context) error {
+			log.FromContext(ctx).Info("HTTP SERVER IS SHUTTING DOWN")
+			return server.Shutdown(stopCtx)
+		},
+	})
+
+	return server
 }
 
 func (s *server) Run(ctx context.Context) error {
-	log.FromContext(ctx).Info("http server address", slog.String("addr", s.Server.Addr))
 	go func() { _ = s.Server.ListenAndServe() }()
 
 	return nil
