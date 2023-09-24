@@ -7,6 +7,7 @@ import (
 	"github.com/ppaprikaa/shorty/internal/db/redis"
 	"github.com/ppaprikaa/shorty/internal/log"
 	loggercontext "github.com/ppaprikaa/shorty/internal/log/context"
+	"github.com/ppaprikaa/shorty/internal/mailer/gomail"
 	"go.uber.org/fx"
 )
 
@@ -17,6 +18,7 @@ func main() {
 		loggercontext.Module,
 		mongo.Module,
 		redis.Module,
+		gomail.Module,
 		app.Module,
 	).Run()
 }

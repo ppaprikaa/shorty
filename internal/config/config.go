@@ -16,6 +16,7 @@ var Module = fx.Module(
 	fx.Provide(HttpServerFromConfig),
 	fx.Provide(MainStorageFromConfig),
 	fx.Provide(RefreshTokensStorageFromConfig),
+	fx.Provide(MailerFromConfig),
 )
 
 type Config struct {
@@ -23,6 +24,7 @@ type Config struct {
 	HttpServer           *HttpServer           `toml:"http_server"`
 	MainStorage          *MainStorage          `toml:"main_storage"`
 	RefreshTokensStorage *RefreshTokensStorage `toml:"refresh_tokens_storage"`
+	Mailer               *Mailer               `toml:"mailer"`
 }
 
 func GetENV(cfg *Config) env.ENV { return cfg.Env }
