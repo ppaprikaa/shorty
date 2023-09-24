@@ -21,7 +21,7 @@ type DB struct {
 
 func Connect(ctx context.Context, lc fx.Lifecycle, cfg *config.RefreshTokensStorage) (*DB, error) {
 	var (
-		DB  = &DB{}
+		DB  = new(DB)
 		err error
 	)
 
