@@ -1,0 +1,25 @@
+#Config
+name = "<APPNAME>"
+version = "<VERSION>"
+env = "<ENV>"
+
+[http_server]
+host = "<HOST>"
+port = 5555 # port
+read_timeout = "<timeout>"
+write_timeout = "<timeout>"
+idle_timeout = "<timeout>"
+
+[main_storage]
+dsn = "<conn string to main storage>"
+
+[refresh_tokens_storage]
+dsn = "<conn string to refresh tokens storage>"
+password = ""
+db = 0
+
+[mailer]
+host = "<host>"
+port = 587 # port
+username = "<smtp username>"
+password = "<smtp password>"
