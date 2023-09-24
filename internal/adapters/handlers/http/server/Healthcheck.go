@@ -7,12 +7,12 @@ import (
 )
 
 func (h *Handler) Healthcheck() http.HandlerFunc {
-	type Res struct {
+	type Response struct {
 		Status string `json:"status"`
 	}
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		if err := json.OK(w, Res{Status: "OK"}); err != nil {
+		if err := json.OK(w, Response{Status: "OK"}); err != nil {
 			json.InternalServerError(w)
 			return
 		}
