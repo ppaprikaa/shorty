@@ -1,5 +1,10 @@
 package user
 
+const (
+	UsernameMinLength, UsernameMaxLength = 5, 24
+	PasswordMinLength, PasswordMaxLength = 8, 24
+)
+
 type Model struct {
 	ID       string
 	Username string
