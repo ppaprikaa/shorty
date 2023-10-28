@@ -8,8 +8,19 @@ pipeline {
     }
 
     stage('List') {
-      steps {
-        sh 'ls -la'
+      parallel {
+        stage('List') {
+          steps {
+            sh 'ls -la'
+          }
+        }
+
+        stage('Run Unit Testing') {
+          steps {
+            sh '/var/jenkins_home/go/bin/go test ./...'
+          }
+        }
+
       }
     }
 
